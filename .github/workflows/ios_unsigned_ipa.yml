@@ -30,40 +30,42 @@ jobs:
 
       - name: Patch pbxproj - disable signing
         run: |
-          PBXPROJ="ios/Runner.xcodeproj/project.pbxproj"
-          # Xóa DEVELOPMENT_TEAM
-          sed -i '' 's/DEVELOPMENT_TEAM = [^;]*;/DEVELOPMENT_TEAM = "";/g' "$PBXPROJ"
-          # Xóa CODE_SIGN_IDENTITY
-          sed -i '' 's/CODE_SIGN_IDENTITY = [^;]*;/CODE_SIGN_IDENTITY = "";/g' "$PBXPROJ"
-          # Xóa PROVISIONING_PROFILE_SPECIFIER
-          sed -i '' 's/PROVISIONING_PROFILE_SPECIFIER = [^;]*;/PROVISIONING_PROFILE_SPECIFIER = "";/g' "$PBXPROJ"
-          echo "=== Patched signing settings ==="
-          grep -E "CODE_SIGN|DEVELOPMENT_TEAM|PROVISIONING" "$PBXPROJ" | head -20
+          PBX="ios/Runner.xcodeproj/project.pbxproj"
+          perl -i -pe 's/DEVELOPMENT_TEAM = \S+?;/DEVELOPMENT_TEAM = "";/g' "$PBX"
+          perl -i -pe 's/CODE_SIGN_IDENTITY = ".*?";/CODE_SIGN_IDENTITY = "";/g' "$PBX"
+          perl -i -pe 's/CODE_SIGN_STYLE = Automatic;/CODE_SIGN_STYLE = Manual;/g' "$PBX"
+          perl -i -pe 's/PROVISIONING_PROFILE_SPECIFIER = ".*?";/PROVISIONING_PROFILE_SPECIFIER = "";/g' "$PBX"
+          grep -E "DEVELOPMENT_TEAM|CODE_SIGN" "$PBX" | sort -u
 
-      - name: xcodebuild archive (no signing)
+      - name: xcodebuild build (no archive, no signing)
         run: |
-          xcodebuild archive \
+          xcodebuild \
             -workspace ios/Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
             -sdk iphoneos \
-            -archivePath /tmp/Runner.xcarchive \
+            -derivedDataPath /tmp/DerivedData \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
             DEVELOPMENT_TEAM="" \
             PROVISIONING_PROFILE_SPECIFIER="" \
-            -allowProvisioningUpdates
+            FLUTTER_BUILD_DIR=build \
+            SKIP_INSTALL=NO \
+            build
 
-      - name: Package unsigned IPA
+      - name: Package IPA
         run: |
-          APP_PATH=$(find /tmp/Runner.xcarchive/Products -name "*.app" | head -1)
-          echo "App: $APP_PATH"
+          APP=$(find /tmp/DerivedData -name "Runner.app" \
+            -not -path "*/intermediates/*" \
+            -not -path "*/ArchiveIntermediates/*" \
+            | head -1)
+          echo "Found: $APP"
           mkdir -p /tmp/Payload
-          cp -r "$APP_PATH" /tmp/Payload/Runner.app
+          cp -r "$APP" /tmp/Payload/Runner.app
           cd /tmp && zip -r TaskFlow-unsigned.ipa Payload
           mv TaskFlow-unsigned.ipa $GITHUB_WORKSPACE/
-          echo "Size: $(du -sh $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa)"
+          du -sh $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa
 
       - name: Upload IPA
         uses: actions/upload-artifact@v4
