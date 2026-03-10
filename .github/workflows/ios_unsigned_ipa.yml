@@ -30,15 +30,33 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Build iOS release (no codesign)
-        run: flutter build ios --release --no-codesign
-
-      - name: Package unsigned IPA
+      - name: Generate iOS runner (flutter build without signing)
         run: |
+          flutter build ios --release --no-codesign || true
+
+      - name: xcodebuild archive (no signing)
+        run: |
+          xcodebuild archive \
+            -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -archivePath /tmp/Runner.xcarchive \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM="" \
+            | xcpretty || true
+
+      - name: Export IPA (no signing)
+        run: |
+          # Lấy .app từ archive, đóng gói thành IPA thủ công
+          APP_PATH=$(find /tmp/Runner.xcarchive -name "*.app" | head -1)
           mkdir -p /tmp/Payload
-          cp -r build/ios/iphoneos/Runner.app /tmp/Payload/Runner.app
-          cd /tmp && zip -r TaskFlow-unsigned.ipa Payload
+          cp -r "$APP_PATH" /tmp/Payload/Runner.app
+          cd /tmp
+          zip -r TaskFlow-unsigned.ipa Payload
           mv /tmp/TaskFlow-unsigned.ipa $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa
+          echo "IPA size: $(du -sh $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa)"
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
