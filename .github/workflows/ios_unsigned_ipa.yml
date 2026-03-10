@@ -22,22 +22,42 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Generate iOS platform folder
+      - name: Generate iOS folder
         run: flutter create --platforms=ios .
 
-      - name: Install CocoaPods dependencies
+      - name: Disable code signing in project.pbxproj
+        run: |
+          PBXPROJ="ios/Runner.xcodeproj/project.pbxproj"
+          # Set CODE_SIGNING_ALLOWED = NO for all build configs
+          sed -i '' 's/CODE_SIGN_IDENTITY = ".*"/CODE_SIGN_IDENTITY = ""/g' "$PBXPROJ"
+          sed -i '' 's/DEVELOPMENT_TEAM = [A-Z0-9]*;/DEVELOPMENT_TEAM = "";/g' "$PBXPROJ"
+          # Add CODE_SIGNING_ALLOWED = NO nếu chưa có
+          sed -i '' '/PRODUCT_NAME = Runner;/a\
+          CODE_SIGNING_ALLOWED = NO;
+          ' "$PBXPROJ" || true
+          echo "pbxproj patched"
+
+      - name: Install CocoaPods
         run: cd ios && pod install --repo-update
 
-      - name: Build iOS no-codesign via Flutter
+      - name: xcodebuild build (no signing)
         run: |
-          flutter build ios --release --no-codesign \
-            --dart-define=FLUTTER_BUILD_MODE=release
+          xcodebuild \
+            -workspace ios/Runner.xcworkspace \
+            -scheme Runner \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath /tmp/DerivedData \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY="" \
+            DEVELOPMENT_TEAM="" \
+            build
 
-      - name: Package unsigned IPA from build output
+      - name: Package unsigned IPA
         run: |
-          APP_PATH="build/ios/iphoneos/Runner.app"
-          echo "Checking: $APP_PATH"
-          ls build/ios/iphoneos/ || true
+          APP_PATH=$(find /tmp/DerivedData -name "Runner.app" -not -path "*/intermediates/*" | head -1)
+          echo "Found: $APP_PATH"
           mkdir -p /tmp/Payload
           cp -r "$APP_PATH" /tmp/Payload/Runner.app
           cd /tmp && zip -r TaskFlow-unsigned.ipa Payload
