@@ -2,71 +2,62 @@ name: iOS Unsigned IPA
 
 on:
   push:
-    branches: [main]
+    branches: ["main"]
   workflow_dispatch:
 
 jobs:
-  build-ios:
+  build-ios-unsigned:
     runs-on: macos-14
-
     steps:
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Setup Flutter (stable)
+      - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
-          cache: true
+          channel: stable
 
-      - name: Flutter pub get
+      - name: Flutter Pub Get
         run: flutter pub get
 
-      - name: Generate iOS folder
-        run: flutter create --platforms=ios .
+      - name: Flutter Build iOS (no codesign)
+        run: flutter build ios --release --no-codesign
 
-      - name: Disable code signing in project.pbxproj
+      - name: Pods clean
         run: |
-          PBXPROJ="ios/Runner.xcodeproj/project.pbxproj"
-          # Set CODE_SIGNING_ALLOWED = NO for all build configs
-          sed -i '' 's/CODE_SIGN_IDENTITY = ".*"/CODE_SIGN_IDENTITY = ""/g' "$PBXPROJ"
-          sed -i '' 's/DEVELOPMENT_TEAM = [A-Z0-9]*;/DEVELOPMENT_TEAM = "";/g' "$PBXPROJ"
-          # Add CODE_SIGNING_ALLOWED = NO nếu chưa có
-          sed -i '' '/PRODUCT_NAME = Runner;/a\
-          CODE_SIGNING_ALLOWED = NO;
-          ' "$PBXPROJ" || true
-          echo "pbxproj patched"
+          cd ios
+          rm -rf Pods Podfile.lock
+          pod install
 
-      - name: Install CocoaPods
-        run: cd ios && pod install --repo-update
-
-      - name: xcodebuild build (no signing)
+      - name: Build Runner.app (xcodebuild no signing)
         run: |
+          cd ios
           xcodebuild \
-            -workspace ios/Runner.xcworkspace \
+            -workspace Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
             -sdk iphoneos \
-            -derivedDataPath /tmp/DerivedData \
+            -archivePath build/Runner.xcarchive archive \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY="" \
+            CODE_SIGNING_IDENTITY="" \
             DEVELOPMENT_TEAM="" \
-            build
+            PROVISIONING_PROFILE_SPECIFIER="" \
+            -quiet
 
       - name: Package unsigned IPA
         run: |
-          APP_PATH=$(find /tmp/DerivedData -name "Runner.app" -not -path "*/intermediates/*" | head -1)
-          echo "Found: $APP_PATH"
-          mkdir -p /tmp/Payload
-          cp -r "$APP_PATH" /tmp/Payload/Runner.app
-          cd /tmp && zip -r TaskFlow-unsigned.ipa Payload
-          mv /tmp/TaskFlow-unsigned.ipa $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa
-          echo "Done: $(du -sh $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa)"
+          mkdir -p build/Payload
+          cp -R ios/build/Runner.xcarchive/Products/Applications/Runner.app build/Payload/Runner.app
+          cd build
+          zip -r AppMusicVol2-unsigned.ipa Payload >/dev/null
 
-      - name: Upload IPA artifact
+      - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: TaskFlow-iOS-unsigned
-          path: TaskFlow-unsigned.ipa
-          retention-days: 30
+          name: AppMusicVol2-unsigned-ipa
+          path: build/AppMusicVol2-unsigned.ipa
+
+      - name: Assert Share Extension embedded
+        run: |
+          find ios/build/Runner.xcarchive/Products/Applications/Runner.app -maxdepth 3 -name "*.appex" -print
