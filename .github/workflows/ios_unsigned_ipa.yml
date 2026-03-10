@@ -30,9 +30,15 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Generate iOS runner (flutter build without signing)
+      - name: Generate iOS platform folder if missing
         run: |
-          flutter build ios --release --no-codesign || true
+          if [ ! -d "ios" ]; then
+            flutter create --platforms=ios .
+          fi
+
+      - name: Install CocoaPods
+        run: |
+          cd ios && pod install --repo-update
 
       - name: xcodebuild archive (no signing)
         run: |
@@ -45,16 +51,16 @@ jobs:
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
             DEVELOPMENT_TEAM="" \
-            | xcpretty || true
+            -allowProvisioningUpdates \
+            2>&1 | tail -50
 
-      - name: Export IPA (no signing)
+      - name: Package unsigned IPA
         run: |
-          # Lấy .app từ archive, đóng gói thành IPA thủ công
           APP_PATH=$(find /tmp/Runner.xcarchive -name "*.app" | head -1)
+          echo "Found .app at: $APP_PATH"
           mkdir -p /tmp/Payload
           cp -r "$APP_PATH" /tmp/Payload/Runner.app
-          cd /tmp
-          zip -r TaskFlow-unsigned.ipa Payload
+          cd /tmp && zip -r TaskFlow-unsigned.ipa Payload
           mv /tmp/TaskFlow-unsigned.ipa $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa
           echo "IPA size: $(du -sh $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa)"
 
