@@ -1,3 +1,4 @@
+// app.dart
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/services.dart';
@@ -32,16 +33,20 @@ class AppTheme {
             color: Color(0xFF1C1C1E),
           ),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           color: Colors.white,
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: const Color(0xFFF5F5F7),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         ),
         chipTheme: ChipThemeData(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -76,16 +81,20 @@ class AppTheme {
             color: Color(0xFFF5F5F7),
           ),
         ),
-        cardTheme: CardTheme(
+        cardTheme: CardThemeData(
           elevation: 0,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
           color: const Color(0xFF2C2C2E),
         ),
         inputDecorationTheme: InputDecorationTheme(
           filled: true,
           fillColor: const Color(0xFF3A3A3C),
-          border: OutlineInputBorder(borderRadius: BorderRadius.circular(12), borderSide: BorderSide.none),
-          contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+          border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(12),
+              borderSide: BorderSide.none),
+          contentPadding:
+              const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         ),
         chipTheme: ChipThemeData(
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
@@ -122,7 +131,8 @@ class _TaskFlowAppState extends State<TaskFlowApp> {
           debugShowCheckedModeBanner: false,
           theme: AppTheme.light(),
           darkTheme: AppTheme.dark(),
-          themeMode: widget.appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
+          themeMode:
+              widget.appState.isDarkMode ? ThemeMode.dark : ThemeMode.light,
           home: MainShell(appState: widget.appState),
         );
       },
@@ -155,16 +165,23 @@ class _MainShellState extends State<MainShell> {
       body: IndexedStack(index: _tab, children: pages),
       bottomNavigationBar: Container(
         decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: Theme.of(context).dividerColor.withOpacity(0.15))),
+          border: Border(
+              top: BorderSide(
+                  color: Theme.of(context).dividerColor.withOpacity(0.15))),
         ),
         child: BottomNavigationBar(
           currentIndex: _tab,
           onTap: (i) => setState(() => _tab = i),
           items: const [
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.house_fill), label: 'Home'),
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.square_grid_2x2_fill), label: 'Board'),
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.search), label: 'Search'),
-            BottomNavigationBarItem(icon: Icon(CupertinoIcons.archivebox_fill), label: 'Archive'),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.house_fill), label: 'Home'),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.square_grid_2x2_fill),
+                label: 'Board'),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.search), label: 'Search'),
+            BottomNavigationBarItem(
+                icon: Icon(CupertinoIcons.archivebox_fill), label: 'Archive'),
           ],
         ),
       ),
@@ -195,7 +212,9 @@ class DashboardScreen extends StatelessWidget {
                 title: const Text('TaskFlow'),
                 actions: [
                   IconButton(
-                    icon: Icon(appState.isDarkMode ? CupertinoIcons.sun_max_fill : CupertinoIcons.moon_fill),
+                    icon: Icon(appState.isDarkMode
+                        ? CupertinoIcons.sun_max_fill
+                        : CupertinoIcons.moon_fill),
                     onPressed: appState.toggleDarkMode,
                   ),
                 ],
@@ -261,10 +280,26 @@ class _StatsGrid extends StatelessWidget {
       mainAxisSpacing: 12,
       childAspectRatio: 1.6,
       children: [
-        _StatCard(label: 'Total', value: appState.totalTasks, color: const Color(0xFF6C63FF), icon: CupertinoIcons.square_stack_3d_up_fill),
-        _StatCard(label: 'Today', value: appState.todayTasks, color: const Color(0xFF00BFA5), icon: CupertinoIcons.calendar),
-        _StatCard(label: 'Overdue', value: appState.overdueTasks, color: const Color(0xFFFF3B30), icon: CupertinoIcons.alarm_fill),
-        _StatCard(label: 'Done', value: appState.doneTasks, color: const Color(0xFF34C759), icon: CupertinoIcons.checkmark_circle_fill),
+        _StatCard(
+            label: 'Total',
+            value: appState.totalTasks,
+            color: const Color(0xFF6C63FF),
+            icon: CupertinoIcons.square_stack_3d_up_fill),
+        _StatCard(
+            label: 'Today',
+            value: appState.todayTasks,
+            color: const Color(0xFF00BFA5),
+            icon: CupertinoIcons.calendar),
+        _StatCard(
+            label: 'Overdue',
+            value: appState.overdueTasks,
+            color: const Color(0xFFFF3B30),
+            icon: CupertinoIcons.alarm_fill),
+        _StatCard(
+            label: 'Done',
+            value: appState.doneTasks,
+            color: const Color(0xFF34C759),
+            icon: CupertinoIcons.checkmark_circle_fill),
       ],
     );
   }
@@ -275,7 +310,11 @@ class _StatCard extends StatelessWidget {
   final int value;
   final Color color;
   final IconData icon;
-  const _StatCard({required this.label, required this.value, required this.color, required this.icon});
+  const _StatCard(
+      {required this.label,
+      required this.value,
+      required this.color,
+      required this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -289,7 +328,9 @@ class _StatCard extends StatelessWidget {
         children: [
           Container(
             padding: const EdgeInsets.all(8),
-            decoration: BoxDecoration(color: color.withOpacity(0.15), borderRadius: BorderRadius.circular(10)),
+            decoration: BoxDecoration(
+                color: color.withOpacity(0.15),
+                borderRadius: BorderRadius.circular(10)),
             child: Icon(icon, color: color, size: 20),
           ),
           const SizedBox(width: 12),
@@ -297,9 +338,18 @@ class _StatCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text('$value', style: TextStyle(fontSize: 24, fontWeight: FontWeight.w700, color: color, height: 1)),
+              Text('$value',
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.w700,
+                      color: color,
+                      height: 1)),
               const SizedBox(height: 2),
-              Text(label, style: TextStyle(fontSize: 12, color: color.withOpacity(0.8), fontWeight: FontWeight.w500)),
+              Text(label,
+                  style: TextStyle(
+                      fontSize: 12,
+                      color: color.withOpacity(0.8),
+                      fontWeight: FontWeight.w500)),
             ],
           ),
         ],
@@ -318,7 +368,10 @@ class _SectionHeader extends StatelessWidget {
     return Row(
       children: [
         Text(title,
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w700, letterSpacing: -0.3)),
+            style: const TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700,
+                letterSpacing: -0.3)),
         const Spacer(),
         if (action != null) action!,
       ],
@@ -348,7 +401,9 @@ class _RecentBoards extends StatelessWidget {
           }
           final b = boards[i];
           final color = Color(b.colorValue);
-          final count = appState.tasks.where((t) => t.boardId == b.id && !t.isArchived).length;
+          final count = appState.tasks
+              .where((t) => t.boardId == b.id && !t.isArchived)
+              .length;
           return GestureDetector(
             onTap: () => appState.selectBoard(b.id),
             child: AnimatedContainer(
@@ -356,7 +411,9 @@ class _RecentBoards extends StatelessWidget {
               width: 140,
               padding: const EdgeInsets.all(14),
               decoration: BoxDecoration(
-                color: appState.currentBoardId == b.id ? color : color.withOpacity(0.12),
+                color: appState.currentBoardId == b.id
+                    ? color
+                    : color.withOpacity(0.12),
                 borderRadius: BorderRadius.circular(16),
                 border: appState.currentBoardId == b.id
                     ? null
@@ -371,12 +428,16 @@ class _RecentBoards extends StatelessWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.w700,
                           fontSize: 15,
-                          color: appState.currentBoardId == b.id ? Colors.white : color)),
+                          color: appState.currentBoardId == b.id
+                              ? Colors.white
+                              : color)),
                   const SizedBox(height: 4),
                   Text('$count tasks',
                       style: TextStyle(
                           fontSize: 12,
-                          color: appState.currentBoardId == b.id ? Colors.white70 : color.withOpacity(0.7))),
+                          color: appState.currentBoardId == b.id
+                              ? Colors.white70
+                              : color.withOpacity(0.7))),
                 ],
               ),
             ),
@@ -407,15 +468,22 @@ class _AddBoardCard extends StatelessWidget {
       child: Container(
         width: 90,
         decoration: BoxDecoration(
-          border: Border.all(color: Theme.of(context).colorScheme.primary.withOpacity(0.3), width: 1.5),
+          border: Border.all(
+              color: Theme.of(context).colorScheme.primary.withOpacity(0.3),
+              width: 1.5),
           borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(CupertinoIcons.add_circled, color: Theme.of(context).colorScheme.primary, size: 24),
+            Icon(CupertinoIcons.add_circled,
+                color: Theme.of(context).colorScheme.primary, size: 24),
             const SizedBox(height: 4),
-            Text('New', style: TextStyle(fontSize: 12, color: Theme.of(context).colorScheme.primary, fontWeight: FontWeight.w600)),
+            Text('New',
+                style: TextStyle(
+                    fontSize: 12,
+                    color: Theme.of(context).colorScheme.primary,
+                    fontWeight: FontWeight.w600)),
           ],
         ),
       ),
@@ -429,9 +497,13 @@ class _TodayTaskList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final tasks = appState.tasks.where((t) => t.isDueToday && !t.isArchived).toList();
+    final tasks =
+        appState.tasks.where((t) => t.isDueToday && !t.isArchived).toList();
     if (tasks.isEmpty) return const _EmptyHint(text: 'No tasks due today 🎉');
-    return Column(children: tasks.map((t) => _MiniTaskTile(task: t, appState: appState)).toList());
+    return Column(
+        children: tasks
+            .map((t) => _MiniTaskTile(task: t, appState: appState))
+            .toList());
   }
 }
 
@@ -446,7 +518,10 @@ class _HighPriorityList extends StatelessWidget {
         .take(5)
         .toList();
     if (tasks.isEmpty) return const _EmptyHint(text: 'No high priority tasks');
-    return Column(children: tasks.map((t) => _MiniTaskTile(task: t, appState: appState)).toList());
+    return Column(
+        children: tasks
+            .map((t) => _MiniTaskTile(task: t, appState: appState))
+            .toList());
   }
 }
 
@@ -466,7 +541,12 @@ class _MiniTaskTile extends StatelessWidget {
         decoration: BoxDecoration(
           color: Theme.of(context).cardTheme.color,
           borderRadius: BorderRadius.circular(14),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 8, offset: const Offset(0, 2))],
+          boxShadow: [
+            BoxShadow(
+                color: Colors.black.withOpacity(0.03),
+                blurRadius: 8,
+                offset: const Offset(0, 2))
+          ],
         ),
         child: Row(
           children: [
@@ -475,7 +555,9 @@ class _MiniTaskTile extends StatelessWidget {
               child: AnimatedSwitcher(
                 duration: const Duration(milliseconds: 200),
                 child: Icon(
-                  task.isDone ? CupertinoIcons.checkmark_circle_fill : CupertinoIcons.circle,
+                  task.isDone
+                      ? CupertinoIcons.checkmark_circle_fill
+                      : CupertinoIcons.circle,
                   key: ValueKey(task.isDone),
                   color: task.isDone ? const Color(0xFF34C759) : Colors.grey,
                   size: 22,
@@ -491,20 +573,27 @@ class _MiniTaskTile extends StatelessWidget {
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
                         fontSize: 15,
-                        decoration: task.isDone ? TextDecoration.lineThrough : null,
+                        decoration:
+                            task.isDone ? TextDecoration.lineThrough : null,
                         color: task.isDone ? Colors.grey : null,
                       )),
                   if (task.dueDate != null)
                     Text(
                       appState.formatDate(task.dueDate),
-                      style: TextStyle(fontSize: 12, color: task.isOverdue ? const Color(0xFFFF3B30) : Colors.grey),
+                      style: TextStyle(
+                          fontSize: 12,
+                          color: task.isOverdue
+                              ? const Color(0xFFFF3B30)
+                              : Colors.grey),
                     ),
                 ],
               ),
             ),
             Container(
-              width: 6, height: 6,
-              decoration: BoxDecoration(color: priorityColor, shape: BoxShape.circle),
+              width: 6,
+              height: 6,
+              decoration:
+                  BoxDecoration(color: priorityColor, shape: BoxShape.circle),
             ),
           ],
         ),
@@ -521,7 +610,9 @@ class _EmptyHint extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16),
-      child: Center(child: Text(text, style: TextStyle(color: Colors.grey.shade500, fontSize: 14))),
+      child: Center(
+          child: Text(text,
+              style: TextStyle(color: Colors.grey.shade500, fontSize: 14))),
     );
   }
 }
@@ -553,8 +644,12 @@ class _KanbanScreenState extends State<KanbanScreen> {
                 children: [
                   if (board != null)
                     Container(
-                      width: 10, height: 10, margin: const EdgeInsets.only(right: 8),
-                      decoration: BoxDecoration(color: Color(board.colorValue), shape: BoxShape.circle),
+                      width: 10,
+                      height: 10,
+                      margin: const EdgeInsets.only(right: 8),
+                      decoration: BoxDecoration(
+                          color: Color(board.colorValue),
+                          shape: BoxShape.circle),
                     ),
                   Text(board?.name ?? 'Select Board'),
                   const SizedBox(width: 4),
@@ -606,12 +701,18 @@ class _KanbanScreenState extends State<KanbanScreen> {
         title: Text(board.name),
         actions: [
           CupertinoActionSheetAction(
-            onPressed: () { Navigator.pop(context); _editBoard(context, board); },
+            onPressed: () {
+              Navigator.pop(context);
+              _editBoard(context, board);
+            },
             child: const Text('Edit Board'),
           ),
           CupertinoActionSheetAction(
             isDestructiveAction: true,
-            onPressed: () { Navigator.pop(context); _deleteBoard(context, board); },
+            onPressed: () {
+              Navigator.pop(context);
+              _deleteBoard(context, board);
+            },
             child: const Text('Delete Board'),
           ),
         ],
@@ -628,7 +729,8 @@ class _KanbanScreenState extends State<KanbanScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => CreateColumnSheet(appState: widget.appState, boardId: boardId),
+      builder: (_) =>
+          CreateColumnSheet(appState: widget.appState, boardId: boardId),
     );
   }
 
@@ -639,7 +741,10 @@ class _KanbanScreenState extends State<KanbanScreen> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => TaskFormSheet(appState: widget.appState, boardId: board.id, columnId: cols.first.id),
+      builder: (_) => TaskFormSheet(
+          appState: widget.appState,
+          boardId: board.id,
+          columnId: cols.first.id),
     );
   }
 
@@ -659,10 +764,15 @@ class _KanbanScreenState extends State<KanbanScreen> {
         title: const Text('Delete Board?'),
         content: Text('This will delete "${board.name}" and all its tasks.'),
         actions: [
-          CupertinoDialogAction(child: const Text('Cancel'), onPressed: () => Navigator.pop(context)),
+          CupertinoDialogAction(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.pop(context)),
           CupertinoDialogAction(
             isDestructiveAction: true,
-            onPressed: () { Navigator.pop(context); widget.appState.deleteBoard(board.id); },
+            onPressed: () {
+              Navigator.pop(context);
+              widget.appState.deleteBoard(board.id);
+            },
             child: const Text('Delete'),
           ),
         ],
@@ -690,13 +800,17 @@ class _EmptyBoardState extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Icon(CupertinoIcons.square_grid_2x2, size: 64, color: Colors.grey),
+          const Icon(CupertinoIcons.square_grid_2x2,
+              size: 64, color: Colors.grey),
           const SizedBox(height: 16),
-          const Text('No boards yet', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
+          const Text('No boards yet',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.w600)),
           const SizedBox(height: 8),
-          const Text('Create a board to get started', style: TextStyle(color: Colors.grey)),
+          const Text('Create a board to get started',
+              style: TextStyle(color: Colors.grey)),
           const SizedBox(height: 24),
-          CupertinoButton.filled(onPressed: onCreateBoard, child: const Text('Create Board')),
+          CupertinoButton.filled(
+              onPressed: onCreateBoard, child: const Text('Create Board')),
         ],
       ),
     );
@@ -763,7 +877,8 @@ class _KanbanColumnWidgetState extends State<_KanbanColumnWidget> {
       onAcceptWithDetails: (details) {
         setState(() => _isDragTarget = false);
         final data = details.data;
-        widget.appState.moveTask(data['taskId'] as String, widget.column.id, tasks.length);
+        widget.appState
+            .moveTask(data['taskId'] as String, widget.column.id, tasks.length);
       },
       builder: (context, candidates, rejected) {
         return AnimatedContainer(
@@ -775,7 +890,8 @@ class _KanbanColumnWidgetState extends State<_KanbanColumnWidget> {
                 ? colColor.withOpacity(0.08)
                 : Theme.of(context).scaffoldBackgroundColor,
             borderRadius: BorderRadius.circular(20),
-            border: _isDragTarget ? Border.all(color: colColor, width: 2) : null,
+            border:
+                _isDragTarget ? Border.all(color: colColor, width: 2) : null,
           ),
           child: Column(
             children: [
@@ -784,24 +900,38 @@ class _KanbanColumnWidgetState extends State<_KanbanColumnWidget> {
                 padding: const EdgeInsets.fromLTRB(14, 14, 8, 8),
                 child: Row(
                   children: [
-                    Container(width: 10, height: 10,
-                        decoration: BoxDecoration(color: colColor, shape: BoxShape.circle)),
+                    Container(
+                        width: 10,
+                        height: 10,
+                        decoration: BoxDecoration(
+                            color: colColor, shape: BoxShape.circle)),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(widget.column.name,
-                          style: const TextStyle(fontWeight: FontWeight.w700, fontSize: 15)),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.w700, fontSize: 15)),
                     ),
                     Text('${tasks.length}',
-                        style: const TextStyle(color: Colors.grey, fontSize: 13, fontWeight: FontWeight.w500)),
+                        style: const TextStyle(
+                            color: Colors.grey,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w500)),
                     const SizedBox(width: 4),
                     PopupMenuButton<String>(
-                      icon: const Icon(CupertinoIcons.ellipsis, size: 18, color: Colors.grey),
+                      icon: const Icon(CupertinoIcons.ellipsis,
+                          size: 18, color: Colors.grey),
                       itemBuilder: (_) => [
-                        const PopupMenuItem(value: 'add', child: Text('Add Task')),
-                        const PopupMenuItem(value: 'rename', child: Text('Rename')),
-                        const PopupMenuItem(value: 'color', child: Text('Change Color')),
+                        const PopupMenuItem(
+                            value: 'add', child: Text('Add Task')),
+                        const PopupMenuItem(
+                            value: 'rename', child: Text('Rename')),
+                        const PopupMenuItem(
+                            value: 'color', child: Text('Change Color')),
                         if (widget.totalCols > 1)
-                          const PopupMenuItem(value: 'delete', child: Text('Delete Column', style: TextStyle(color: Colors.red))),
+                          const PopupMenuItem(
+                              value: 'delete',
+                              child: Text('Delete Column',
+                                  style: TextStyle(color: Colors.red))),
                       ],
                       onSelected: (v) => _handleColumnAction(context, v),
                     ),
@@ -814,7 +944,8 @@ class _KanbanColumnWidgetState extends State<_KanbanColumnWidget> {
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   buildDefaultDragHandles: false,
                   itemCount: tasks.length,
-                  onReorder: (oldI, newI) => widget.appState.reorderTaskInColumn(widget.column.id, oldI, newI),
+                  onReorder: (oldI, newI) => widget.appState
+                      .reorderTaskInColumn(widget.column.id, oldI, newI),
                   itemBuilder: (context, idx) {
                     final task = tasks[idx];
                     return _TaskCard(
@@ -844,7 +975,11 @@ class _KanbanColumnWidgetState extends State<_KanbanColumnWidget> {
                       children: [
                         Icon(CupertinoIcons.plus, size: 16, color: colColor),
                         const SizedBox(width: 6),
-                        Text('Add Task', style: TextStyle(fontSize: 13, color: colColor, fontWeight: FontWeight.w600)),
+                        Text('Add Task',
+                            style: TextStyle(
+                                fontSize: 13,
+                                color: colColor,
+                                fontWeight: FontWeight.w600)),
                       ],
                     ),
                   ),
@@ -892,7 +1027,8 @@ class _KanbanColumnWidgetState extends State<_KanbanColumnWidget> {
       context: context,
       isScrollControlled: true,
       backgroundColor: Colors.transparent,
-      builder: (_) => _RenameColumnSheet(appState: widget.appState, column: widget.column),
+      builder: (_) =>
+          _RenameColumnSheet(appState: widget.appState, column: widget.column),
     );
   }
 
@@ -902,7 +1038,8 @@ class _KanbanColumnWidgetState extends State<_KanbanColumnWidget> {
       backgroundColor: Colors.transparent,
       builder: (_) => _ColorPickerSheet(
         initialColor: Color(widget.column.colorValue),
-        onColorSelected: (c) => widget.appState.updateColumn(widget.column.id, colorValue: c.value),
+        onColorSelected: (c) =>
+            widget.appState.updateColumn(widget.column.id, colorValue: c.value),
       ),
     );
   }
@@ -914,10 +1051,15 @@ class _KanbanColumnWidgetState extends State<_KanbanColumnWidget> {
         title: const Text('Delete Column?'),
         content: Text('All tasks in "${widget.column.name}" will be deleted.'),
         actions: [
-          CupertinoDialogAction(child: const Text('Cancel'), onPressed: () => Navigator.pop(context)),
+          CupertinoDialogAction(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.pop(context)),
           CupertinoDialogAction(
             isDestructiveAction: true,
-            onPressed: () { Navigator.pop(context); widget.appState.deleteColumn(widget.column.id); },
+            onPressed: () {
+              Navigator.pop(context);
+              widget.appState.deleteColumn(widget.column.id);
+            },
             child: const Text('Delete'),
           ),
         ],
@@ -952,15 +1094,29 @@ class _TaskCard extends StatelessWidget {
         borderRadius: BorderRadius.circular(14),
         child: SizedBox(
           width: 240,
-          child: _TaskCardContent(task: task, appState: appState, priorityColor: priorityColor, isGhost: false),
+          child: _TaskCardContent(
+              task: task,
+              appState: appState,
+              priorityColor: priorityColor,
+              isGhost: false),
         ),
       ),
-      childWhenDragging: Opacity(opacity: 0.3, child: _TaskCardContent(task: task, appState: appState, priorityColor: priorityColor, isGhost: true)),
+      childWhenDragging: Opacity(
+          opacity: 0.3,
+          child: _TaskCardContent(
+              task: task,
+              appState: appState,
+              priorityColor: priorityColor,
+              isGhost: true)),
       child: ReorderableDragStartListener(
         index: dragIndex,
         child: GestureDetector(
           onTap: () => _openTaskDetail(context, task, appState),
-          child: _TaskCardContent(task: task, appState: appState, priorityColor: priorityColor, isGhost: false),
+          child: _TaskCardContent(
+              task: task,
+              appState: appState,
+              priorityColor: priorityColor,
+              isGhost: false),
         ),
       ),
     );
@@ -973,7 +1129,11 @@ class _TaskCardContent extends StatelessWidget {
   final Color priorityColor;
   final bool isGhost;
 
-  const _TaskCardContent({required this.task, required this.appState, required this.priorityColor, required this.isGhost});
+  const _TaskCardContent(
+      {required this.task,
+      required this.appState,
+      required this.priorityColor,
+      required this.isGhost});
 
   @override
   Widget build(BuildContext context) {
@@ -984,9 +1144,14 @@ class _TaskCardContent extends StatelessWidget {
       decoration: BoxDecoration(
         color: Theme.of(context).cardTheme.color,
         borderRadius: BorderRadius.circular(14),
-        boxShadow: isGhost ? [] : [
-          BoxShadow(color: Colors.black.withOpacity(isDark ? 0.2 : 0.05), blurRadius: 8, offset: const Offset(0, 2)),
-        ],
+        boxShadow: isGhost
+            ? []
+            : [
+                BoxShadow(
+                    color: Colors.black.withOpacity(isDark ? 0.2 : 0.05),
+                    blurRadius: 8,
+                    offset: const Offset(0, 2)),
+              ],
         border: Border(left: BorderSide(color: priorityColor, width: 3)),
       ),
       child: Column(
@@ -1001,27 +1166,34 @@ class _TaskCardContent extends StatelessWidget {
                     style: TextStyle(
                       fontWeight: FontWeight.w600,
                       fontSize: 14,
-                      decoration: task.isDone ? TextDecoration.lineThrough : null,
+                      decoration:
+                          task.isDone ? TextDecoration.lineThrough : null,
                       color: task.isDone ? Colors.grey : null,
                     )),
               ),
-              if (task.isFavorite) const Icon(CupertinoIcons.heart_fill, size: 14, color: Color(0xFFFF3B30)),
+              if (task.isFavorite)
+                const Icon(CupertinoIcons.heart_fill,
+                    size: 14, color: Color(0xFFFF3B30)),
               if (task.isPinned) ...[
                 const SizedBox(width: 4),
-                const Icon(CupertinoIcons.pin_fill, size: 14, color: Color(0xFFFF9500)),
+                const Icon(CupertinoIcons.pin_fill,
+                    size: 14, color: Color(0xFFFF9500)),
               ],
             ],
           ),
           if (task.description.isNotEmpty) ...[
             const SizedBox(height: 4),
-            Text(task.description, maxLines: 2, overflow: TextOverflow.ellipsis,
+            Text(task.description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: const TextStyle(fontSize: 12, color: Colors.grey)),
           ],
           if (task.subtasks.isNotEmpty) ...[
             const SizedBox(height: 8),
             Row(
               children: [
-                const Icon(CupertinoIcons.checkmark_square, size: 12, color: Colors.grey),
+                const Icon(CupertinoIcons.checkmark_square,
+                    size: 12, color: Colors.grey),
                 const SizedBox(width: 4),
                 Text(
                   '${task.subtasks.where((s) => s.isDone).length}/${task.subtasks.length}',
@@ -1032,7 +1204,10 @@ class _TaskCardContent extends StatelessWidget {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(4),
                     child: LinearProgressIndicator(
-                      value: task.subtasks.isEmpty ? 0 : task.subtasks.where((s) => s.isDone).length / task.subtasks.length,
+                      value: task.subtasks.isEmpty
+                          ? 0
+                          : task.subtasks.where((s) => s.isDone).length /
+                              task.subtasks.length,
                       minHeight: 4,
                       backgroundColor: Colors.grey.withOpacity(0.2),
                       color: const Color(0xFF34C759),
@@ -1059,7 +1234,8 @@ class _TaskCardContent extends StatelessWidget {
             children: [
               if (task.dueDate != null)
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 7, vertical: 3),
                   decoration: BoxDecoration(
                     color: task.isOverdue
                         ? const Color(0xFFFF3B30).withOpacity(0.1)
@@ -1069,13 +1245,18 @@ class _TaskCardContent extends StatelessWidget {
                   child: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(CupertinoIcons.calendar, size: 10,
-                          color: task.isOverdue ? const Color(0xFFFF3B30) : Colors.grey),
+                      Icon(CupertinoIcons.calendar,
+                          size: 10,
+                          color: task.isOverdue
+                              ? const Color(0xFFFF3B30)
+                              : Colors.grey),
                       const SizedBox(width: 3),
                       Text(appState.formatDate(task.dueDate),
                           style: TextStyle(
                             fontSize: 10,
-                            color: task.isOverdue ? const Color(0xFFFF3B30) : Colors.grey,
+                            color: task.isOverdue
+                                ? const Color(0xFFFF3B30)
+                                : Colors.grey,
                             fontWeight: FontWeight.w500,
                           )),
                     ],
@@ -1084,7 +1265,10 @@ class _TaskCardContent extends StatelessWidget {
               const Spacer(),
               if (task.tags.isNotEmpty)
                 Text('#${task.tags.first}',
-                    style: const TextStyle(fontSize: 10, color: Colors.grey, fontStyle: FontStyle.italic)),
+                    style: const TextStyle(
+                        fontSize: 10,
+                        color: Colors.grey,
+                        fontStyle: FontStyle.italic)),
             ],
           ),
         ],
@@ -1134,7 +1318,8 @@ class _SearchScreenState extends State<SearchScreen> {
                     prefixIcon: const Icon(CupertinoIcons.search, size: 20),
                     suffixIcon: _ctrl.text.isNotEmpty
                         ? IconButton(
-                            icon: const Icon(CupertinoIcons.clear_circled_solid, size: 18),
+                            icon: const Icon(CupertinoIcons.clear_circled_solid,
+                                size: 18),
                             onPressed: () {
                               _ctrl.clear();
                               widget.appState.searchQuery = '';
@@ -1163,8 +1348,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       label: 'Today',
                       selected: widget.appState.filterOptions.onlyToday,
                       onTap: () {
-                        widget.appState.filterOptions = widget.appState.filterOptions
-                            .copyWith(onlyToday: !widget.appState.filterOptions.onlyToday);
+                        widget.appState.filterOptions =
+                            widget.appState.filterOptions.copyWith(
+                                onlyToday:
+                                    !widget.appState.filterOptions.onlyToday);
                         widget.appState.notifyListeners();
                       },
                     ),
@@ -1173,8 +1360,10 @@ class _SearchScreenState extends State<SearchScreen> {
                       label: 'Overdue',
                       selected: widget.appState.filterOptions.onlyOverdue,
                       onTap: () {
-                        widget.appState.filterOptions = widget.appState.filterOptions
-                            .copyWith(onlyOverdue: !widget.appState.filterOptions.onlyOverdue);
+                        widget.appState.filterOptions =
+                            widget.appState.filterOptions.copyWith(
+                                onlyOverdue:
+                                    !widget.appState.filterOptions.onlyOverdue);
                         widget.appState.notifyListeners();
                       },
                     ),
@@ -1183,19 +1372,25 @@ class _SearchScreenState extends State<SearchScreen> {
                       label: 'Favorites',
                       selected: widget.appState.filterOptions.onlyFavorite,
                       onTap: () {
-                        widget.appState.filterOptions = widget.appState.filterOptions
-                            .copyWith(onlyFavorite: !widget.appState.filterOptions.onlyFavorite);
+                        widget.appState.filterOptions =
+                            widget.appState.filterOptions.copyWith(
+                                onlyFavorite: !widget
+                                    .appState.filterOptions.onlyFavorite);
                         widget.appState.notifyListeners();
                       },
                     ),
                     const SizedBox(width: 8),
                     _FilterChip(
                       label: '🔴 High',
-                      selected: widget.appState.filterOptions.priority == Priority.high,
+                      selected: widget.appState.filterOptions.priority ==
+                          Priority.high,
                       onTap: () {
                         final cur = widget.appState.filterOptions.priority;
-                        widget.appState.filterOptions = widget.appState.filterOptions
-                            .copyWith(priority: cur == Priority.high ? null : Priority.high);
+                        widget.appState.filterOptions =
+                            widget.appState.filterOptions.copyWith(
+                                priority: cur == Priority.high
+                                    ? null
+                                    : Priority.high);
                         widget.appState.notifyListeners();
                       },
                     ),
@@ -1206,7 +1401,9 @@ class _SearchScreenState extends State<SearchScreen> {
               const SizedBox(height: 8),
               Expanded(
                 child: results.isEmpty
-                    ? const Center(child: Text('No results', style: TextStyle(color: Colors.grey)))
+                    ? const Center(
+                        child: Text('No results',
+                            style: TextStyle(color: Colors.grey)))
                     : ListView.builder(
                         padding: const EdgeInsets.symmetric(horizontal: 16),
                         itemCount: results.length,
@@ -1229,7 +1426,11 @@ class _FilterChip extends StatelessWidget {
   final bool selected;
   final VoidCallback onTap;
   final IconData? icon;
-  const _FilterChip({required this.label, required this.selected, required this.onTap, this.icon});
+  const _FilterChip(
+      {required this.label,
+      required this.selected,
+      required this.onTap,
+      this.icon});
 
   @override
   Widget build(BuildContext context) {
@@ -1246,8 +1447,15 @@ class _FilterChip extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (icon != null) ...[Icon(icon, size: 14, color: selected ? Colors.white : color), const SizedBox(width: 4)],
-            Text(label, style: TextStyle(fontSize: 13, color: selected ? Colors.white : color, fontWeight: FontWeight.w600)),
+            if (icon != null) ...[
+              Icon(icon, size: 14, color: selected ? Colors.white : color),
+              const SizedBox(width: 4)
+            ],
+            Text(label,
+                style: TextStyle(
+                    fontSize: 13,
+                    color: selected ? Colors.white : color,
+                    fontWeight: FontWeight.w600)),
           ],
         ),
       ),
@@ -1272,12 +1480,18 @@ class _FilterPanel extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Sort by', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+          const Text('Sort by',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
             children: SortBy.values.map((s) {
-              final labels = {SortBy.manual: 'Manual', SortBy.deadline: 'Deadline', SortBy.createdAt: 'Created', SortBy.priority: 'Priority'};
+              final labels = {
+                SortBy.manual: 'Manual',
+                SortBy.deadline: 'Deadline',
+                SortBy.createdAt: 'Created',
+                SortBy.priority: 'Priority'
+              };
               return GestureDetector(
                 onTap: () {
                   appState.filterOptions = fo.copyWith(sortBy: s);
@@ -1285,9 +1499,12 @@ class _FilterPanel extends StatelessWidget {
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 150),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: fo.sortBy == s ? Theme.of(context).colorScheme.primary : Colors.grey.withOpacity(0.1),
+                    color: fo.sortBy == s
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.grey.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(labels[s]!,
@@ -1300,12 +1517,18 @@ class _FilterPanel extends StatelessWidget {
             }).toList(),
           ),
           const SizedBox(height: 12),
-          const Text('Status', style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
+          const Text('Status',
+              style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13)),
           const SizedBox(height: 8),
           Wrap(
             spacing: 8,
             children: FilterStatus.values.map((s) {
-              final labels = {FilterStatus.all: 'All', FilterStatus.active: 'Active', FilterStatus.done: 'Done', FilterStatus.archived: 'Archived'};
+              final labels = {
+                FilterStatus.all: 'All',
+                FilterStatus.active: 'Active',
+                FilterStatus.done: 'Done',
+                FilterStatus.archived: 'Archived'
+              };
               return GestureDetector(
                 onTap: () {
                   appState.filterOptions = fo.copyWith(status: s);
@@ -1313,9 +1536,12 @@ class _FilterPanel extends StatelessWidget {
                 },
                 child: AnimatedContainer(
                   duration: const Duration(milliseconds: 150),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                   decoration: BoxDecoration(
-                    color: fo.status == s ? Theme.of(context).colorScheme.primary : Colors.grey.withOpacity(0.1),
+                    color: fo.status == s
+                        ? Theme.of(context).colorScheme.primary
+                        : Colors.grey.withOpacity(0.1),
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: Text(labels[s]!,
@@ -1361,10 +1587,14 @@ class _SearchResultTile extends StatelessWidget {
                       style: TextStyle(
                           fontWeight: FontWeight.w600,
                           fontSize: 15,
-                          decoration: task.isDone ? TextDecoration.lineThrough : null)),
+                          decoration:
+                              task.isDone ? TextDecoration.lineThrough : null)),
                   if (task.description.isNotEmpty)
-                    Text(task.description, maxLines: 1, overflow: TextOverflow.ellipsis,
-                        style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                    Text(task.description,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            const TextStyle(fontSize: 12, color: Colors.grey)),
                   const SizedBox(height: 4),
                   Row(
                     children: [
@@ -1372,11 +1602,15 @@ class _SearchResultTile extends StatelessWidget {
                         Text(appState.formatDate(task.dueDate),
                             style: TextStyle(
                                 fontSize: 11,
-                                color: task.isOverdue ? const Color(0xFFFF3B30) : Colors.grey)),
+                                color: task.isOverdue
+                                    ? const Color(0xFFFF3B30)
+                                    : Colors.grey)),
                       const SizedBox(width: 8),
                       ...task.tags.take(2).map((tag) => Padding(
                             padding: const EdgeInsets.only(right: 4),
-                            child: Text('#$tag', style: const TextStyle(fontSize: 11, color: Colors.grey)),
+                            child: Text('#$tag',
+                                style: const TextStyle(
+                                    fontSize: 11, color: Colors.grey)),
                           )),
                     ],
                   ),
@@ -1386,7 +1620,9 @@ class _SearchResultTile extends StatelessWidget {
             GestureDetector(
               onTap: () => appState.toggleDone(task.id),
               child: Icon(
-                task.isDone ? CupertinoIcons.checkmark_circle_fill : CupertinoIcons.circle,
+                task.isDone
+                    ? CupertinoIcons.checkmark_circle_fill
+                    : CupertinoIcons.circle,
                 color: task.isDone ? const Color(0xFF34C759) : Colors.grey,
               ),
             ),
@@ -1413,12 +1649,15 @@ class ArchiveScreen extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(title: const Text('Archive')),
           body: archived.isEmpty
-              ? const Center(child: Column(
+              ? const Center(
+                  child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(CupertinoIcons.archivebox, size: 60, color: Colors.grey),
+                    Icon(CupertinoIcons.archivebox,
+                        size: 60, color: Colors.grey),
                     SizedBox(height: 12),
-                    Text('Archive is empty', style: TextStyle(color: Colors.grey, fontSize: 16)),
+                    Text('Archive is empty',
+                        style: TextStyle(color: Colors.grey, fontSize: 16)),
                   ],
                 ))
               : ListView.builder(
@@ -1439,8 +1678,14 @@ class ArchiveScreen extends StatelessWidget {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text(task.title, style: const TextStyle(fontWeight: FontWeight.w600, color: Colors.grey)),
-                                Text('Archived', style: TextStyle(fontSize: 11, color: Colors.grey.shade400)),
+                                Text(task.title,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.w600,
+                                        color: Colors.grey)),
+                                Text('Archived',
+                                    style: TextStyle(
+                                        fontSize: 11,
+                                        color: Colors.grey.shade400)),
                               ],
                             ),
                           ),
@@ -1449,7 +1694,8 @@ class ArchiveScreen extends StatelessWidget {
                             child: const Text('Restore'),
                           ),
                           IconButton(
-                            icon: const Icon(CupertinoIcons.trash, color: Colors.red, size: 18),
+                            icon: const Icon(CupertinoIcons.trash,
+                                color: Colors.red, size: 18),
                             onPressed: () => _confirmDelete(context, task),
                           ),
                         ],
@@ -1468,10 +1714,15 @@ class ArchiveScreen extends StatelessWidget {
       builder: (_) => CupertinoAlertDialog(
         title: const Text('Delete permanently?'),
         actions: [
-          CupertinoDialogAction(child: const Text('Cancel'), onPressed: () => Navigator.pop(context)),
+          CupertinoDialogAction(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.pop(context)),
           CupertinoDialogAction(
             isDestructiveAction: true,
-            onPressed: () { Navigator.pop(context); appState.deleteTask(task.id); },
+            onPressed: () {
+              Navigator.pop(context);
+              appState.deleteTask(task.id);
+            },
             child: const Text('Delete'),
           ),
         ],
@@ -1495,7 +1746,8 @@ void _openTaskDetail(BuildContext context, Task task, AppState appState) {
 class TaskDetailSheet extends StatefulWidget {
   final Task task;
   final AppState appState;
-  const TaskDetailSheet({super.key, required this.task, required this.appState});
+  const TaskDetailSheet(
+      {super.key, required this.task, required this.appState});
 
   @override
   State<TaskDetailSheet> createState() => _TaskDetailSheetState();
@@ -1511,7 +1763,8 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
   }
 
   void _refresh() {
-    final updated = widget.appState.tasks.firstWhere((t) => t.id == _task.id, orElse: () => _task);
+    final updated = widget.appState.tasks
+        .firstWhere((t) => t.id == _task.id, orElse: () => _task);
     setState(() => _task = updated);
   }
 
@@ -1530,18 +1783,29 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
         child: Column(
           children: [
             const SizedBox(height: 8),
-            Container(width: 36, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.4), borderRadius: BorderRadius.circular(2))),
+            Container(
+                width: 36,
+                height: 4,
+                decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.4),
+                    borderRadius: BorderRadius.circular(2))),
             // Header
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 12, 8, 0),
               child: Row(
                 children: [
-                  Container(width: 12, height: 12,
-                      decoration: BoxDecoration(color: priorityColor, shape: BoxShape.circle)),
+                  Container(
+                      width: 12,
+                      height: 12,
+                      decoration: BoxDecoration(
+                          color: priorityColor, shape: BoxShape.circle)),
                   const SizedBox(width: 10),
                   Expanded(
                     child: Text(_task.title,
-                        style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, letterSpacing: -0.3)),
+                        style: const TextStyle(
+                            fontSize: 20,
+                            fontWeight: FontWeight.w700,
+                            letterSpacing: -0.3)),
                   ),
                   IconButton(
                     icon: const Icon(CupertinoIcons.pencil),
@@ -1551,19 +1815,28 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                         context: context,
                         isScrollControlled: true,
                         backgroundColor: Colors.transparent,
-                        builder: (_) => TaskFormSheet(appState: widget.appState, existingTask: _task),
+                        builder: (_) => TaskFormSheet(
+                            appState: widget.appState, existingTask: _task),
                       );
                     },
                   ),
                   PopupMenuButton<String>(
                     icon: const Icon(CupertinoIcons.ellipsis),
                     itemBuilder: (_) => [
-                      const PopupMenuItem(value: 'done', child: Text('Toggle Done')),
-                      const PopupMenuItem(value: 'fav', child: Text('Toggle Favorite')),
-                      const PopupMenuItem(value: 'pin', child: Text('Toggle Pin')),
-                      const PopupMenuItem(value: 'dup', child: Text('Duplicate')),
-                      const PopupMenuItem(value: 'archive', child: Text('Archive')),
-                      const PopupMenuItem(value: 'delete', child: Text('Delete', style: TextStyle(color: Colors.red))),
+                      const PopupMenuItem(
+                          value: 'done', child: Text('Toggle Done')),
+                      const PopupMenuItem(
+                          value: 'fav', child: Text('Toggle Favorite')),
+                      const PopupMenuItem(
+                          value: 'pin', child: Text('Toggle Pin')),
+                      const PopupMenuItem(
+                          value: 'dup', child: Text('Duplicate')),
+                      const PopupMenuItem(
+                          value: 'archive', child: Text('Archive')),
+                      const PopupMenuItem(
+                          value: 'delete',
+                          child: Text('Delete',
+                              style: TextStyle(color: Colors.red))),
                     ],
                     onSelected: (v) => _handleAction(context, v),
                   ),
@@ -1576,11 +1849,15 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                 padding: const EdgeInsets.all(20),
                 children: [
                   if (_task.description.isNotEmpty) ...[
-                    _DetailSection(label: 'Description', child: Text(_task.description)),
+                    _DetailSection(
+                        label: 'Description', child: Text(_task.description)),
                     const SizedBox(height: 16),
                   ],
                   if (_task.note.isNotEmpty) ...[
-                    _DetailSection(label: 'Note', child: Text(_task.note, style: const TextStyle(color: Colors.grey))),
+                    _DetailSection(
+                        label: 'Note',
+                        child: Text(_task.note,
+                            style: const TextStyle(color: Colors.grey))),
                     const SizedBox(height: 16),
                   ],
                   // Meta info grid
@@ -1592,22 +1869,31 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                         _MetaChip(
                           icon: CupertinoIcons.calendar,
                           label: widget.appState.formatDate(_task.dueDate),
-                          color: _task.isOverdue ? const Color(0xFFFF3B30) : null,
+                          color:
+                              _task.isOverdue ? const Color(0xFFFF3B30) : null,
                         ),
                       if (_task.dueTime != null)
-                        _MetaChip(icon: CupertinoIcons.clock, label: widget.appState.formatTime(_task.dueTime)),
+                        _MetaChip(
+                            icon: CupertinoIcons.clock,
+                            label: widget.appState.formatTime(_task.dueTime)),
                       _MetaChip(
                         icon: CupertinoIcons.flag_fill,
                         label: _task.priority.name.capitalize(),
                         color: priorityColor,
                       ),
                       if (_task.estimatedMinutes > 0)
-                        _MetaChip(icon: CupertinoIcons.stopwatch, label: '${_task.estimatedMinutes} min est.'),
+                        _MetaChip(
+                            icon: CupertinoIcons.stopwatch,
+                            label: '${_task.estimatedMinutes} min est.'),
                       if (_task.actualMinutes > 0)
-                        _MetaChip(icon: CupertinoIcons.checkmark_circle, label: '${_task.actualMinutes} min actual'),
+                        _MetaChip(
+                            icon: CupertinoIcons.checkmark_circle,
+                            label: '${_task.actualMinutes} min actual'),
                       if (_task.reminderAt != null)
-                        _MetaChip(icon: CupertinoIcons.bell_fill,
-                            label: 'Reminder: ${widget.appState.formatDateTime(_task.reminderAt)}',
+                        _MetaChip(
+                            icon: CupertinoIcons.bell_fill,
+                            label:
+                                'Reminder: ${widget.appState.formatDateTime(_task.reminderAt)}',
                             color: const Color(0xFF6C63FF)),
                     ],
                   ),
@@ -1617,10 +1903,15 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                       spacing: 6,
                       children: _task.tags
                           .map((t) => Chip(
-                                label: Text('#$t', style: const TextStyle(fontSize: 12)),
-                                backgroundColor: Theme.of(context).colorScheme.primary.withOpacity(0.1),
+                                label: Text('#$t',
+                                    style: const TextStyle(fontSize: 12)),
+                                backgroundColor: Theme.of(context)
+                                    .colorScheme
+                                    .primary
+                                    .withOpacity(0.1),
                                 padding: EdgeInsets.zero,
-                                materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                                materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
                               ))
                           .toList(),
                     ),
@@ -1643,26 +1934,36 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
                   if (_task.subtasks.isNotEmpty) ...[
                     const SizedBox(height: 16),
                     _DetailSection(
-                      label: 'Checklist ${_task.subtasks.where((s) => s.isDone).length}/${_task.subtasks.length}',
+                      label:
+                          'Checklist ${_task.subtasks.where((s) => s.isDone).length}/${_task.subtasks.length}',
                       child: Column(
-                        children: _task.subtasks.map((s) => CheckboxListTile(
-                          value: s.isDone,
-                          dense: true,
-                          contentPadding: EdgeInsets.zero,
-                          title: Text(s.title, style: TextStyle(
-                            decoration: s.isDone ? TextDecoration.lineThrough : null,
-                            color: s.isDone ? Colors.grey : null,
-                            fontSize: 14,
-                          )),
-                          onChanged: (v) {
-                            final updated = _task.copyWith(
-                              subtasks: _task.subtasks.map((st) =>
-                                  st.id == s.id ? st.copyWith(isDone: v ?? false) : st).toList(),
-                            );
-                            widget.appState.updateTask(_task.id, updated);
-                            _refresh();
-                          },
-                        )).toList(),
+                        children: _task.subtasks
+                            .map((s) => CheckboxListTile(
+                                  value: s.isDone,
+                                  dense: true,
+                                  contentPadding: EdgeInsets.zero,
+                                  title: Text(s.title,
+                                      style: TextStyle(
+                                        decoration: s.isDone
+                                            ? TextDecoration.lineThrough
+                                            : null,
+                                        color: s.isDone ? Colors.grey : null,
+                                        fontSize: 14,
+                                      )),
+                                  onChanged: (v) {
+                                    final updated = _task.copyWith(
+                                      subtasks: _task.subtasks
+                                          .map((st) => st.id == s.id
+                                              ? st.copyWith(isDone: v ?? false)
+                                              : st)
+                                          .toList(),
+                                    );
+                                    widget.appState
+                                        .updateTask(_task.id, updated);
+                                    _refresh();
+                                  },
+                                ))
+                            .toList(),
                       ),
                     ),
                   ],
@@ -1708,7 +2009,9 @@ class _TaskDetailSheetState extends State<TaskDetailSheet> {
           builder: (_) => CupertinoAlertDialog(
             title: const Text('Delete task?'),
             actions: [
-              CupertinoDialogAction(child: const Text('Cancel'), onPressed: () => Navigator.pop(context)),
+              CupertinoDialogAction(
+                  child: const Text('Cancel'),
+                  onPressed: () => Navigator.pop(context)),
               CupertinoDialogAction(
                 isDestructiveAction: true,
                 onPressed: () {
@@ -1737,7 +2040,11 @@ class _DetailSection extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(label.toUpperCase(),
-            style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.grey, letterSpacing: 0.5)),
+            style: const TextStyle(
+                fontSize: 11,
+                fontWeight: FontWeight.w700,
+                color: Colors.grey,
+                letterSpacing: 0.5)),
         const SizedBox(height: 6),
         child,
       ],
@@ -1765,7 +2072,9 @@ class _MetaChip extends StatelessWidget {
         children: [
           Icon(icon, size: 13, color: c),
           const SizedBox(width: 5),
-          Text(label, style: TextStyle(fontSize: 12, color: c, fontWeight: FontWeight.w500)),
+          Text(label,
+              style: TextStyle(
+                  fontSize: 12, color: c, fontWeight: FontWeight.w500)),
         ],
       ),
     );
@@ -1837,7 +2146,8 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
       _progress = t.progress;
       _progressCtrl.text = t.progress.toString();
       _estimatedMinutes = t.estimatedMinutes;
-      _estCtrl.text = t.estimatedMinutes > 0 ? t.estimatedMinutes.toString() : '';
+      _estCtrl.text =
+          t.estimatedMinutes > 0 ? t.estimatedMinutes.toString() : '';
       _actualMinutes = t.actualMinutes;
       _actCtrl.text = t.actualMinutes > 0 ? t.actualMinutes.toString() : '';
       _subtasks = List.from(t.subtasks);
@@ -1862,7 +2172,11 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
 
   void _save() {
     if (_titleCtrl.text.trim().isEmpty) return;
-    final tags = _tagsCtrl.text.split(',').map((t) => t.trim()).where((t) => t.isNotEmpty).toList();
+    final tags = _tagsCtrl.text
+        .split(',')
+        .map((t) => t.trim())
+        .where((t) => t.isNotEmpty)
+        .toList();
     final progress = int.tryParse(_progressCtrl.text) ?? _progress;
     final est = int.tryParse(_estCtrl.text) ?? 0;
     final act = int.tryParse(_actCtrl.text) ?? 0;
@@ -1923,22 +2237,34 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
         child: Column(
           children: [
             const SizedBox(height: 8),
-            Container(width: 36, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.4), borderRadius: BorderRadius.circular(2))),
+            Container(
+                width: 36,
+                height: 4,
+                decoration: BoxDecoration(
+                    color: Colors.grey.withOpacity(0.4),
+                    borderRadius: BorderRadius.circular(2))),
             Padding(
               padding: const EdgeInsets.fromLTRB(20, 14, 8, 0),
               child: Row(
                 children: [
                   Text(_isEdit ? 'Edit Task' : 'New Task',
-                      style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700, letterSpacing: -0.3)),
+                      style: const TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w700,
+                          letterSpacing: -0.3)),
                   const Spacer(),
-                  TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+                  TextButton(
+                      onPressed: () => Navigator.pop(context),
+                      child: const Text('Cancel')),
                   const SizedBox(width: 4),
                   CupertinoButton(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                     color: Theme.of(context).colorScheme.primary,
                     borderRadius: BorderRadius.circular(12),
                     onPressed: _save,
-                    child: const Text('Save', style: TextStyle(fontWeight: FontWeight.w600)),
+                    child: const Text('Save',
+                        style: TextStyle(fontWeight: FontWeight.w600)),
                   ),
                 ],
               ),
@@ -1952,7 +2278,8 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                   TextField(
                     controller: _titleCtrl,
                     autofocus: !_isEdit,
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                    style: const TextStyle(
+                        fontSize: 18, fontWeight: FontWeight.w600),
                     decoration: const InputDecoration(hintText: 'Task title…'),
                   ),
                   const SizedBox(height: 12),
@@ -1960,14 +2287,16 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                   TextField(
                     controller: _descCtrl,
                     maxLines: 3,
-                    decoration: const InputDecoration(hintText: 'Description (optional)'),
+                    decoration: const InputDecoration(
+                        hintText: 'Description (optional)'),
                   ),
                   const SizedBox(height: 12),
                   // Note
                   TextField(
                     controller: _noteCtrl,
                     maxLines: 2,
-                    decoration: const InputDecoration(hintText: 'Note (optional)'),
+                    decoration:
+                        const InputDecoration(hintText: 'Note (optional)'),
                   ),
                   const SizedBox(height: 16),
                   // Priority
@@ -1986,7 +2315,8 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                               duration: const Duration(milliseconds: 150),
                               padding: const EdgeInsets.symmetric(vertical: 10),
                               decoration: BoxDecoration(
-                                color: selected ? color : color.withOpacity(0.1),
+                                color:
+                                    selected ? color : color.withOpacity(0.1),
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(
@@ -1994,7 +2324,8 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                                     style: TextStyle(
                                         fontSize: 13,
                                         fontWeight: FontWeight.w600,
-                                        color: selected ? Colors.white : color)),
+                                        color:
+                                            selected ? Colors.white : color)),
                               ),
                             ),
                           ),
@@ -2006,12 +2337,19 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                   // Flags
                   Row(
                     children: [
-                      _ToggleChip(label: 'Favorite', icon: CupertinoIcons.heart_fill,
-                          active: _isFavorite, color: const Color(0xFFFF3B30),
-                          onTap: () => setState(() => _isFavorite = !_isFavorite)),
+                      _ToggleChip(
+                          label: 'Favorite',
+                          icon: CupertinoIcons.heart_fill,
+                          active: _isFavorite,
+                          color: const Color(0xFFFF3B30),
+                          onTap: () =>
+                              setState(() => _isFavorite = !_isFavorite)),
                       const SizedBox(width: 8),
-                      _ToggleChip(label: 'Pin', icon: CupertinoIcons.pin_fill,
-                          active: _isPinned, color: const Color(0xFFFF9500),
+                      _ToggleChip(
+                          label: 'Pin',
+                          icon: CupertinoIcons.pin_fill,
+                          active: _isPinned,
+                          color: const Color(0xFFFF9500),
                           onTap: () => setState(() => _isPinned = !_isPinned)),
                     ],
                   ),
@@ -2025,17 +2363,27 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                         child: GestureDetector(
                           onTap: () => _pickDate(context),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 12),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).inputDecorationTheme.fillColor,
+                              color: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .fillColor,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
                               children: [
-                                const Icon(CupertinoIcons.calendar, size: 18, color: Colors.grey),
+                                const Icon(CupertinoIcons.calendar,
+                                    size: 18, color: Colors.grey),
                                 const SizedBox(width: 8),
-                                Text(_dueDate != null ? widget.appState.formatDate(_dueDate) : 'No date',
-                                    style: TextStyle(color: _dueDate != null ? null : Colors.grey)),
+                                Text(
+                                    _dueDate != null
+                                        ? widget.appState.formatDate(_dueDate)
+                                        : 'No date',
+                                    style: TextStyle(
+                                        color: _dueDate != null
+                                            ? null
+                                            : Colors.grey)),
                               ],
                             ),
                           ),
@@ -2046,17 +2394,27 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                         child: GestureDetector(
                           onTap: () => _pickTime(context),
                           child: Container(
-                            padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 14, vertical: 12),
                             decoration: BoxDecoration(
-                              color: Theme.of(context).inputDecorationTheme.fillColor,
+                              color: Theme.of(context)
+                                  .inputDecorationTheme
+                                  .fillColor,
                               borderRadius: BorderRadius.circular(12),
                             ),
                             child: Row(
                               children: [
-                                const Icon(CupertinoIcons.clock, size: 18, color: Colors.grey),
+                                const Icon(CupertinoIcons.clock,
+                                    size: 18, color: Colors.grey),
                                 const SizedBox(width: 8),
-                                Text(_dueTime != null ? widget.appState.formatTime(_dueTime) : 'No time',
-                                    style: TextStyle(color: _dueTime != null ? null : Colors.grey)),
+                                Text(
+                                    _dueTime != null
+                                        ? widget.appState.formatTime(_dueTime)
+                                        : 'No time',
+                                    style: TextStyle(
+                                        color: _dueTime != null
+                                            ? null
+                                            : Colors.grey)),
                               ],
                             ),
                           ),
@@ -2071,27 +2429,35 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                   GestureDetector(
                     onTap: () => _pickReminder(context),
                     child: Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 12),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 14, vertical: 12),
                       decoration: BoxDecoration(
                         color: Theme.of(context).inputDecorationTheme.fillColor,
                         borderRadius: BorderRadius.circular(12),
                       ),
                       child: Row(
                         children: [
-                          const Icon(CupertinoIcons.bell, size: 18, color: Colors.grey),
+                          const Icon(CupertinoIcons.bell,
+                              size: 18, color: Colors.grey),
                           const SizedBox(width: 8),
                           Expanded(
                             child: Text(
                               _reminderAt != null
                                   ? widget.appState.formatDateTime(_reminderAt)
                                   : 'No reminder set',
-                              style: TextStyle(color: _reminderAt != null ? const Color(0xFF6C63FF) : Colors.grey),
+                              style: TextStyle(
+                                  color: _reminderAt != null
+                                      ? const Color(0xFF6C63FF)
+                                      : Colors.grey),
                             ),
                           ),
                           if (_reminderAt != null)
                             GestureDetector(
                               onTap: () => setState(() => _reminderAt = null),
-                              child: const Icon(CupertinoIcons.clear_circled_solid, size: 16, color: Colors.grey),
+                              child: const Icon(
+                                  CupertinoIcons.clear_circled_solid,
+                                  size: 16,
+                                  color: Colors.grey),
                             ),
                         ],
                       ),
@@ -2122,8 +2488,11 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           style: const TextStyle(fontSize: 13),
-                          decoration: const InputDecoration(contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
-                          onChanged: (v) => setState(() => _progress = (int.tryParse(v) ?? 0).clamp(0, 100)),
+                          decoration: const InputDecoration(
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 8, vertical: 8)),
+                          onChanged: (v) => setState(() =>
+                              _progress = (int.tryParse(v) ?? 0).clamp(0, 100)),
                         ),
                       ),
                     ],
@@ -2169,7 +2538,8 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                   const SizedBox(height: 8),
                   TextField(
                     controller: _tagsCtrl,
-                    decoration: const InputDecoration(hintText: 'work, health, personal…'),
+                    decoration: const InputDecoration(
+                        hintText: 'work, health, personal…'),
                   ),
                   const SizedBox(height: 16),
                   // Subtasks
@@ -2181,14 +2551,21 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                         leading: Checkbox(
                           value: s.isDone,
                           onChanged: (v) => setState(() {
-                            final i = _subtasks.indexWhere((st) => st.id == s.id);
+                            final i =
+                                _subtasks.indexWhere((st) => st.id == s.id);
                             _subtasks[i] = s.copyWith(isDone: v ?? false);
                           }),
                         ),
-                        title: Text(s.title, style: TextStyle(decoration: s.isDone ? TextDecoration.lineThrough : null)),
+                        title: Text(s.title,
+                            style: TextStyle(
+                                decoration: s.isDone
+                                    ? TextDecoration.lineThrough
+                                    : null)),
                         trailing: IconButton(
-                          icon: const Icon(CupertinoIcons.minus_circle, color: Colors.red, size: 18),
-                          onPressed: () => setState(() => _subtasks.removeWhere((st) => st.id == s.id)),
+                          icon: const Icon(CupertinoIcons.minus_circle,
+                              color: Colors.red, size: 18),
+                          onPressed: () => setState(() =>
+                              _subtasks.removeWhere((st) => st.id == s.id)),
                         ),
                       )),
                   Row(
@@ -2196,7 +2573,8 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
                       Expanded(
                         child: TextField(
                           controller: _subtaskCtrl,
-                          decoration: const InputDecoration(hintText: 'Add checklist item…'),
+                          decoration: const InputDecoration(
+                              hintText: 'Add checklist item…'),
                           onSubmitted: _addSubtask,
                         ),
                       ),
@@ -2235,7 +2613,8 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
   }
 
   Future<void> _pickTime(BuildContext context) async {
-    final picked = await showTimePicker(context: context, initialTime: _dueTime ?? TimeOfDay.now());
+    final picked = await showTimePicker(
+        context: context, initialTime: _dueTime ?? TimeOfDay.now());
     if (picked != null) setState(() => _dueTime = picked);
   }
 
@@ -2248,10 +2627,13 @@ class _TaskFormSheetState extends State<TaskFormSheet> {
     );
     if (date == null) return;
     if (!mounted) return;
-    final time = await showTimePicker(context: context, initialTime: TimeOfDay.fromDateTime(_reminderAt ?? DateTime.now()));
+    final time = await showTimePicker(
+        context: context,
+        initialTime: TimeOfDay.fromDateTime(_reminderAt ?? DateTime.now()));
     if (time == null) return;
     setState(() {
-      _reminderAt = DateTime(date.year, date.month, date.day, time.hour, time.minute);
+      _reminderAt =
+          DateTime(date.year, date.month, date.day, time.hour, time.minute);
     });
   }
 }
@@ -2263,7 +2645,11 @@ class _FormLabel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Text(text.toUpperCase(),
-        style: const TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.grey, letterSpacing: 0.5));
+        style: const TextStyle(
+            fontSize: 11,
+            fontWeight: FontWeight.w700,
+            color: Colors.grey,
+            letterSpacing: 0.5));
   }
 }
 
@@ -2273,7 +2659,12 @@ class _ToggleChip extends StatelessWidget {
   final bool active;
   final Color color;
   final VoidCallback onTap;
-  const _ToggleChip({required this.label, required this.icon, required this.active, required this.color, required this.onTap});
+  const _ToggleChip(
+      {required this.label,
+      required this.icon,
+      required this.active,
+      required this.color,
+      required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -2283,7 +2674,8 @@ class _ToggleChip extends StatelessWidget {
         duration: const Duration(milliseconds: 150),
         padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
         decoration: BoxDecoration(
-          color: active ? color.withOpacity(0.15) : Colors.grey.withOpacity(0.1),
+          color:
+              active ? color.withOpacity(0.15) : Colors.grey.withOpacity(0.1),
           borderRadius: BorderRadius.circular(10),
           border: active ? Border.all(color: color.withOpacity(0.4)) : null,
         ),
@@ -2292,7 +2684,11 @@ class _ToggleChip extends StatelessWidget {
           children: [
             Icon(icon, size: 14, color: active ? color : Colors.grey),
             const SizedBox(width: 6),
-            Text(label, style: TextStyle(fontSize: 13, color: active ? color : Colors.grey, fontWeight: FontWeight.w500)),
+            Text(label,
+                style: TextStyle(
+                    fontSize: 13,
+                    color: active ? color : Colors.grey,
+                    fontWeight: FontWeight.w500)),
           ],
         ),
       ),
@@ -2323,12 +2719,19 @@ class BoardManagerSheet extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 8),
-              Container(width: 36, height: 4, decoration: BoxDecoration(color: Colors.grey.withOpacity(0.4), borderRadius: BorderRadius.circular(2))),
+              Container(
+                  width: 36,
+                  height: 4,
+                  decoration: BoxDecoration(
+                      color: Colors.grey.withOpacity(0.4),
+                      borderRadius: BorderRadius.circular(2))),
               Padding(
                 padding: const EdgeInsets.fromLTRB(20, 14, 8, 0),
                 child: Row(
                   children: [
-                    const Text('Boards', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+                    const Text('Boards',
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w700)),
                     const Spacer(),
                     TextButton.icon(
                       icon: const Icon(CupertinoIcons.plus, size: 16),
@@ -2354,15 +2757,22 @@ class BoardManagerSheet extends StatelessWidget {
                   itemBuilder: (context, i) {
                     final board = appState.boards[i];
                     final color = Color(board.colorValue);
-                    final count = appState.tasks.where((t) => t.boardId == board.id && !t.isArchived).length;
+                    final count = appState.tasks
+                        .where((t) => t.boardId == board.id && !t.isArchived)
+                        .length;
                     return GestureDetector(
-                      onTap: () { appState.selectBoard(board.id); Navigator.pop(context); },
+                      onTap: () {
+                        appState.selectBoard(board.id);
+                        Navigator.pop(context);
+                      },
                       child: AnimatedContainer(
                         duration: const Duration(milliseconds: 200),
                         margin: const EdgeInsets.only(bottom: 10),
                         padding: const EdgeInsets.all(16),
                         decoration: BoxDecoration(
-                          color: appState.currentBoardId == board.id ? color.withOpacity(0.15) : Theme.of(context).cardTheme.color,
+                          color: appState.currentBoardId == board.id
+                              ? color.withOpacity(0.15)
+                              : Theme.of(context).cardTheme.color,
                           borderRadius: BorderRadius.circular(16),
                           border: appState.currentBoardId == board.id
                               ? Border.all(color: color, width: 1.5)
@@ -2371,27 +2781,42 @@ class BoardManagerSheet extends StatelessWidget {
                         child: Row(
                           children: [
                             Container(
-                              width: 40, height: 40,
-                              decoration: BoxDecoration(color: color.withOpacity(0.2), borderRadius: BorderRadius.circular(10)),
-                              child: Icon(CupertinoIcons.square_grid_2x2_fill, color: color, size: 20),
+                              width: 40,
+                              height: 40,
+                              decoration: BoxDecoration(
+                                  color: color.withOpacity(0.2),
+                                  borderRadius: BorderRadius.circular(10)),
+                              child: Icon(CupertinoIcons.square_grid_2x2_fill,
+                                  color: color, size: 20),
                             ),
                             const SizedBox(width: 12),
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Text(board.name, style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 15)),
-                                  Text('$count tasks', style: const TextStyle(fontSize: 12, color: Colors.grey)),
+                                  Text(board.name,
+                                      style: const TextStyle(
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: 15)),
+                                  Text('$count tasks',
+                                      style: const TextStyle(
+                                          fontSize: 12, color: Colors.grey)),
                                 ],
                               ),
                             ),
                             if (appState.currentBoardId == board.id)
-                              Icon(CupertinoIcons.checkmark_circle_fill, color: color),
+                              Icon(CupertinoIcons.checkmark_circle_fill,
+                                  color: color),
                             PopupMenuButton<String>(
-                              icon: const Icon(CupertinoIcons.ellipsis, size: 18, color: Colors.grey),
+                              icon: const Icon(CupertinoIcons.ellipsis,
+                                  size: 18, color: Colors.grey),
                               itemBuilder: (_) => [
-                                const PopupMenuItem(value: 'edit', child: Text('Edit')),
-                                const PopupMenuItem(value: 'delete', child: Text('Delete', style: TextStyle(color: Colors.red))),
+                                const PopupMenuItem(
+                                    value: 'edit', child: Text('Edit')),
+                                const PopupMenuItem(
+                                    value: 'delete',
+                                    child: Text('Delete',
+                                        style: TextStyle(color: Colors.red))),
                               ],
                               onSelected: (v) {
                                 if (v == 'edit') {
@@ -2400,7 +2825,8 @@ class BoardManagerSheet extends StatelessWidget {
                                     context: context,
                                     isScrollControlled: true,
                                     backgroundColor: Colors.transparent,
-                                    builder: (_) => EditBoardSheet(appState: appState, board: board),
+                                    builder: (_) => EditBoardSheet(
+                                        appState: appState, board: board),
                                   );
                                 } else {
                                   _confirmDeleteBoard(context, board);
@@ -2428,10 +2854,15 @@ class BoardManagerSheet extends StatelessWidget {
         title: const Text('Delete Board?'),
         content: Text('This will delete "${board.name}" and all its tasks.'),
         actions: [
-          CupertinoDialogAction(child: const Text('Cancel'), onPressed: () => Navigator.pop(context)),
+          CupertinoDialogAction(
+              child: const Text('Cancel'),
+              onPressed: () => Navigator.pop(context)),
           CupertinoDialogAction(
             isDestructiveAction: true,
-            onPressed: () { Navigator.pop(context); appState.deleteBoard(board.id); },
+            onPressed: () {
+              Navigator.pop(context);
+              appState.deleteBoard(board.id);
+            },
             child: const Text('Delete'),
           ),
         ],
@@ -2454,7 +2885,10 @@ class _CreateBoardSheetState extends State<CreateBoardSheet> {
   Color _selectedColor = const Color(0xFF6C63FF);
 
   @override
-  void dispose() { _ctrl.dispose(); super.dispose(); }
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -2475,7 +2909,8 @@ class _CreateBoardSheetState extends State<CreateBoardSheet> {
 class EditBoardSheet extends StatefulWidget {
   final AppState appState;
   final Board board;
-  const EditBoardSheet({super.key, required this.appState, required this.board});
+  const EditBoardSheet(
+      {super.key, required this.appState, required this.board});
 
   @override
   State<EditBoardSheet> createState() => _EditBoardSheetState();
@@ -2493,7 +2928,10 @@ class _EditBoardSheetState extends State<EditBoardSheet> {
   }
 
   @override
-  void dispose() { _ctrl.dispose(); super.dispose(); }
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -2504,7 +2942,8 @@ class _EditBoardSheetState extends State<EditBoardSheet> {
       onColorSelected: (c) => setState(() => _selectedColor = c),
       onSave: () {
         if (_ctrl.text.trim().isEmpty) return;
-        widget.appState.updateBoard(widget.board.id, name: _ctrl.text.trim(), colorValue: _selectedColor.value);
+        widget.appState.updateBoard(widget.board.id,
+            name: _ctrl.text.trim(), colorValue: _selectedColor.value);
         Navigator.pop(context);
       },
     );
@@ -2527,15 +2966,23 @@ class _BoardFormContent extends StatelessWidget {
   });
 
   static const _colors = [
-    Color(0xFF6C63FF), Color(0xFF00BFA5), Color(0xFFFF6B6B), Color(0xFF4ECDC4),
-    Color(0xFFFF9500), Color(0xFF34C759), Color(0xFF2196F3), Color(0xFFE91E63),
-    Color(0xFF9C27B0), Color(0xFFFF5722),
+    Color(0xFF6C63FF),
+    Color(0xFF00BFA5),
+    Color(0xFFFF6B6B),
+    Color(0xFF4ECDC4),
+    Color(0xFFFF9500),
+    Color(0xFF34C759),
+    Color(0xFF2196F3),
+    Color(0xFFE91E63),
+    Color(0xFF9C27B0),
+    Color(0xFFFF5722),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
@@ -2548,9 +2995,13 @@ class _BoardFormContent extends StatelessWidget {
           children: [
             Row(
               children: [
-                Text(title, style: const TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+                Text(title,
+                    style: const TextStyle(
+                        fontSize: 20, fontWeight: FontWeight.w700)),
                 const Spacer(),
-                TextButton(onPressed: () => Navigator.pop(context), child: const Text('Cancel')),
+                TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text('Cancel')),
               ],
             ),
             const SizedBox(height: 16),
@@ -2560,29 +3011,40 @@ class _BoardFormContent extends StatelessWidget {
               decoration: const InputDecoration(hintText: 'Board name…'),
             ),
             const SizedBox(height: 16),
-            const Text('COLOR', style: TextStyle(fontSize: 11, fontWeight: FontWeight.w700, color: Colors.grey, letterSpacing: 0.5)),
+            const Text('COLOR',
+                style: TextStyle(
+                    fontSize: 11,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.grey,
+                    letterSpacing: 0.5)),
             const SizedBox(height: 10),
             Wrap(
               spacing: 10,
               runSpacing: 10,
-              children: _colors.map((c) => GestureDetector(
-                    onTap: () => onColorSelected(c),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 150),
-                      width: 36,
-                      height: 36,
-                      decoration: BoxDecoration(
-                        color: c,
-                        shape: BoxShape.circle,
-                        border: selectedColor.value == c.value
-                            ? Border.all(color: Colors.white, width: 3)
-                            : null,
-                        boxShadow: selectedColor.value == c.value
-                            ? [BoxShadow(color: c.withOpacity(0.5), blurRadius: 8)]
-                            : null,
-                      ),
-                    ),
-                  )).toList(),
+              children: _colors
+                  .map((c) => GestureDetector(
+                        onTap: () => onColorSelected(c),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 150),
+                          width: 36,
+                          height: 36,
+                          decoration: BoxDecoration(
+                            color: c,
+                            shape: BoxShape.circle,
+                            border: selectedColor.value == c.value
+                                ? Border.all(color: Colors.white, width: 3)
+                                : null,
+                            boxShadow: selectedColor.value == c.value
+                                ? [
+                                    BoxShadow(
+                                        color: c.withOpacity(0.5),
+                                        blurRadius: 8)
+                                  ]
+                                : null,
+                          ),
+                        ),
+                      ))
+                  .toList(),
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -2591,7 +3053,8 @@ class _BoardFormContent extends StatelessWidget {
                 color: selectedColor,
                 borderRadius: BorderRadius.circular(14),
                 onPressed: onSave,
-                child: const Text('Save', style: TextStyle(fontWeight: FontWeight.w700)),
+                child: const Text('Save',
+                    style: TextStyle(fontWeight: FontWeight.w700)),
               ),
             ),
             const SizedBox(height: 8),
@@ -2606,7 +3069,8 @@ class _BoardFormContent extends StatelessWidget {
 class CreateColumnSheet extends StatefulWidget {
   final AppState appState;
   final String boardId;
-  const CreateColumnSheet({super.key, required this.appState, required this.boardId});
+  const CreateColumnSheet(
+      {super.key, required this.appState, required this.boardId});
 
   @override
   State<CreateColumnSheet> createState() => _CreateColumnSheetState();
@@ -2617,12 +3081,16 @@ class _CreateColumnSheetState extends State<CreateColumnSheet> {
   Color _color = const Color(0xFF6C63FF);
 
   @override
-  void dispose() { _ctrl.dispose(); super.dispose(); }
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
@@ -2633,26 +3101,40 @@ class _CreateColumnSheetState extends State<CreateColumnSheet> {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            const Text('New Column', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+            const Text('New Column',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
             const SizedBox(height: 16),
-            TextField(controller: _ctrl, autofocus: true, decoration: const InputDecoration(hintText: 'Column name…')),
+            TextField(
+                controller: _ctrl,
+                autofocus: true,
+                decoration: const InputDecoration(hintText: 'Column name…')),
             const SizedBox(height: 16),
             Wrap(
               spacing: 10,
               children: [
-                const Color(0xFF6C63FF), const Color(0xFFFF9800), const Color(0xFF4CAF50),
-                const Color(0xFF2196F3), const Color(0xFFFF3B30), const Color(0xFF00BFA5),
-              ].map((c) => GestureDetector(
-                    onTap: () => setState(() => _color = c),
-                    child: AnimatedContainer(
-                      duration: const Duration(milliseconds: 150),
-                      width: 32, height: 32,
-                      decoration: BoxDecoration(
-                        color: c, shape: BoxShape.circle,
-                        border: _color.value == c.value ? Border.all(color: Colors.white, width: 3) : null,
-                      ),
-                    ),
-                  )).toList(),
+                const Color(0xFF6C63FF),
+                const Color(0xFFFF9800),
+                const Color(0xFF4CAF50),
+                const Color(0xFF2196F3),
+                const Color(0xFFFF3B30),
+                const Color(0xFF00BFA5),
+              ]
+                  .map((c) => GestureDetector(
+                        onTap: () => setState(() => _color = c),
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 150),
+                          width: 32,
+                          height: 32,
+                          decoration: BoxDecoration(
+                            color: c,
+                            shape: BoxShape.circle,
+                            border: _color.value == c.value
+                                ? Border.all(color: Colors.white, width: 3)
+                                : null,
+                          ),
+                        ),
+                      ))
+                  .toList(),
             ),
             const SizedBox(height: 20),
             SizedBox(
@@ -2662,10 +3144,12 @@ class _CreateColumnSheetState extends State<CreateColumnSheet> {
                 borderRadius: BorderRadius.circular(14),
                 onPressed: () {
                   if (_ctrl.text.trim().isEmpty) return;
-                  widget.appState.createColumn(widget.boardId, _ctrl.text.trim(), _color.value);
+                  widget.appState.createColumn(
+                      widget.boardId, _ctrl.text.trim(), _color.value);
                   Navigator.pop(context);
                 },
-                child: const Text('Create Column', style: TextStyle(fontWeight: FontWeight.w700)),
+                child: const Text('Create Column',
+                    style: TextStyle(fontWeight: FontWeight.w700)),
               ),
             ),
           ],
@@ -2695,12 +3179,16 @@ class _RenameColumnSheetState extends State<_RenameColumnSheet> {
   }
 
   @override
-  void dispose() { _ctrl.dispose(); super.dispose(); }
+  void dispose() {
+    _ctrl.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+      padding:
+          EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
       decoration: BoxDecoration(
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: const BorderRadius.vertical(top: Radius.circular(24)),
@@ -2710,9 +3198,13 @@ class _RenameColumnSheetState extends State<_RenameColumnSheet> {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text('Rename Column', style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
+            const Text('Rename Column',
+                style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700)),
             const SizedBox(height: 16),
-            TextField(controller: _ctrl, autofocus: true, decoration: const InputDecoration(hintText: 'Column name…')),
+            TextField(
+                controller: _ctrl,
+                autofocus: true,
+                decoration: const InputDecoration(hintText: 'Column name…')),
             const SizedBox(height: 16),
             SizedBox(
               width: double.infinity,
@@ -2721,10 +3213,12 @@ class _RenameColumnSheetState extends State<_RenameColumnSheet> {
                 borderRadius: BorderRadius.circular(14),
                 onPressed: () {
                   if (_ctrl.text.trim().isEmpty) return;
-                  widget.appState.updateColumn(widget.column.id, name: _ctrl.text.trim());
+                  widget.appState
+                      .updateColumn(widget.column.id, name: _ctrl.text.trim());
                   Navigator.pop(context);
                 },
-                child: const Text('Save', style: TextStyle(fontWeight: FontWeight.w700)),
+                child: const Text('Save',
+                    style: TextStyle(fontWeight: FontWeight.w700)),
               ),
             ),
           ],
@@ -2738,7 +3232,8 @@ class _RenameColumnSheetState extends State<_RenameColumnSheet> {
 class _ColorPickerSheet extends StatefulWidget {
   final Color initialColor;
   final ValueChanged<Color> onColorSelected;
-  const _ColorPickerSheet({required this.initialColor, required this.onColorSelected});
+  const _ColorPickerSheet(
+      {required this.initialColor, required this.onColorSelected});
 
   @override
   State<_ColorPickerSheet> createState() => _ColorPickerSheetState();
@@ -2748,9 +3243,18 @@ class _ColorPickerSheetState extends State<_ColorPickerSheet> {
   late Color _selected;
 
   static const _colors = [
-    Color(0xFF6C63FF), Color(0xFF00BFA5), Color(0xFFFF6B6B), Color(0xFF4ECDC4),
-    Color(0xFFFF9500), Color(0xFF34C759), Color(0xFF2196F3), Color(0xFFE91E63),
-    Color(0xFF9C27B0), Color(0xFFFF5722), Color(0xFF607D8B), Color(0xFF795548),
+    Color(0xFF6C63FF),
+    Color(0xFF00BFA5),
+    Color(0xFFFF6B6B),
+    Color(0xFF4ECDC4),
+    Color(0xFFFF9500),
+    Color(0xFF34C759),
+    Color(0xFF2196F3),
+    Color(0xFFE91E63),
+    Color(0xFF9C27B0),
+    Color(0xFFFF5722),
+    Color(0xFF607D8B),
+    Color(0xFF795548),
   ];
 
   @override
@@ -2770,24 +3274,39 @@ class _ColorPickerSheetState extends State<_ColorPickerSheet> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text('Pick Color', style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
+          const Text('Pick Color',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700)),
           const SizedBox(height: 16),
           Wrap(
             spacing: 12,
             runSpacing: 12,
-            children: _colors.map((c) => GestureDetector(
-                  onTap: () { setState(() => _selected = c); widget.onColorSelected(c); Navigator.pop(context); },
-                  child: AnimatedContainer(
-                    duration: const Duration(milliseconds: 150),
-                    width: 44, height: 44,
-                    decoration: BoxDecoration(
-                      color: c,
-                      shape: BoxShape.circle,
-                      border: _selected.value == c.value ? Border.all(color: Colors.white, width: 3) : null,
-                      boxShadow: _selected.value == c.value ? [BoxShadow(color: c.withOpacity(0.5), blurRadius: 10)] : null,
-                    ),
-                  ),
-                )).toList(),
+            children: _colors
+                .map((c) => GestureDetector(
+                      onTap: () {
+                        setState(() => _selected = c);
+                        widget.onColorSelected(c);
+                        Navigator.pop(context);
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 150),
+                        width: 44,
+                        height: 44,
+                        decoration: BoxDecoration(
+                          color: c,
+                          shape: BoxShape.circle,
+                          border: _selected.value == c.value
+                              ? Border.all(color: Colors.white, width: 3)
+                              : null,
+                          boxShadow: _selected.value == c.value
+                              ? [
+                                  BoxShadow(
+                                      color: c.withOpacity(0.5), blurRadius: 10)
+                                ]
+                              : null,
+                        ),
+                      ),
+                    ))
+                .toList(),
           ),
           const SizedBox(height: 12),
         ],
@@ -2809,5 +3328,6 @@ Color _priorityColor(Priority p) {
 }
 
 extension StringExt on String {
-  String capitalize() => isEmpty ? this : '${this[0].toUpperCase()}${substring(1)}';
+  String capitalize() =>
+      isEmpty ? this : '${this[0].toUpperCase()}${substring(1)}';
 }

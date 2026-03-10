@@ -37,7 +37,10 @@ jobs:
           perl -i -pe 's/PROVISIONING_PROFILE_SPECIFIER = ".*?";/PROVISIONING_PROFILE_SPECIFIER = "";/g' "$PBX"
           grep -E "DEVELOPMENT_TEAM|CODE_SIGN" "$PBX" | sort -u
 
-      - name: xcodebuild build (no archive, no signing)
+      - name: Flutter build iOS (compile Dart, ignore signing error)
+        run: flutter build ios --release --no-codesign || true
+
+      - name: xcodebuild build (no signing)
         run: |
           xcodebuild \
             -workspace ios/Runner.xcworkspace \
@@ -50,7 +53,6 @@ jobs:
             CODE_SIGN_IDENTITY="" \
             DEVELOPMENT_TEAM="" \
             PROVISIONING_PROFILE_SPECIFIER="" \
-            FLUTTER_BUILD_DIR=build \
             SKIP_INSTALL=NO \
             build
 
