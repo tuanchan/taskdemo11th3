@@ -13,10 +13,10 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup Flutter (stable)
+      - name: Setup Flutter stable
         uses: subosito/flutter-action@v2
         with:
-          channel: "stable"
+          channel: stable
           cache: true
 
       - name: Cache pub packages
@@ -30,7 +30,7 @@ jobs:
       - name: Flutter pub get
         run: flutter pub get
 
-      - name: Generate iOS platform folder if missing
+      - name: Generate iOS folder if missing
         run: |
           if [ ! -d "ios" ]; then
             flutter create --platforms=ios .
@@ -38,31 +38,18 @@ jobs:
 
       - name: Install CocoaPods
         run: |
-          cd ios && pod install --repo-update
+          cd ios
+          pod install --repo-update
 
-      - name: xcodebuild archive (no signing)
-        run: |
-          xcodebuild archive \
-            -workspace ios/Runner.xcworkspace \
-            -scheme Runner \
-            -configuration Release \
-            -archivePath /tmp/Runner.xcarchive \
-            CODE_SIGNING_ALLOWED=NO \
-            CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGN_IDENTITY="" \
-            DEVELOPMENT_TEAM="" \
-            -allowProvisioningUpdates \
-            2>&1 | tail -50
+      - name: Build iOS release without codesign
+        run: flutter build ios --release --no-codesign
 
       - name: Package unsigned IPA
         run: |
-          APP_PATH=$(find /tmp/Runner.xcarchive -name "*.app" | head -1)
-          echo "Found .app at: $APP_PATH"
-          mkdir -p /tmp/Payload
-          cp -r "$APP_PATH" /tmp/Payload/Runner.app
-          cd /tmp && zip -r TaskFlow-unsigned.ipa Payload
-          mv /tmp/TaskFlow-unsigned.ipa $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa
-          echo "IPA size: $(du -sh $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa)"
+          rm -rf Payload
+          mkdir -p Payload
+          cp -R build/ios/iphoneos/Runner.app Payload/Runner.app
+          zip -r TaskFlow-unsigned.ipa Payload
 
       - name: Upload IPA artifact
         uses: actions/upload-artifact@v4
