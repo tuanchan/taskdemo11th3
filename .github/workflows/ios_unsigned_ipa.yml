@@ -2,52 +2,72 @@ name: iOS Unsigned IPA
 
 on:
   push:
-    branches: ["main"]
+    branches: [main]
   workflow_dispatch:
 
 jobs:
-  build-ios-unsigned:
+  build-ios:
     runs-on: macos-14
+
     steps:
-      - name: Checkout
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Flutter
+      - name: Setup Flutter (stable)
         uses: subosito/flutter-action@v2
         with:
-          channel: stable
+          channel: "stable"
+          cache: true
 
-      - name: Flutter Pub Get
+      - name: Flutter pub get
         run: flutter pub get
 
-      - name: Flutter Build iOS (no codesign)
-        run: flutter build ios --release --no-codesign
+      - name: Generate iOS folder
+        run: flutter create --platforms=ios .
 
-      - name: Build Runner.app (xcodebuild no signing)
+      - name: Pod install
+        run: cd ios && pod install --repo-update
+
+      - name: Patch pbxproj - disable signing
         run: |
-          cd ios
-          xcodebuild \
-            -workspace Runner.xcworkspace \
+          PBXPROJ="ios/Runner.xcodeproj/project.pbxproj"
+          # Xóa DEVELOPMENT_TEAM
+          sed -i '' 's/DEVELOPMENT_TEAM = [^;]*;/DEVELOPMENT_TEAM = "";/g' "$PBXPROJ"
+          # Xóa CODE_SIGN_IDENTITY
+          sed -i '' 's/CODE_SIGN_IDENTITY = [^;]*;/CODE_SIGN_IDENTITY = "";/g' "$PBXPROJ"
+          # Xóa PROVISIONING_PROFILE_SPECIFIER
+          sed -i '' 's/PROVISIONING_PROFILE_SPECIFIER = [^;]*;/PROVISIONING_PROFILE_SPECIFIER = "";/g' "$PBXPROJ"
+          echo "=== Patched signing settings ==="
+          grep -E "CODE_SIGN|DEVELOPMENT_TEAM|PROVISIONING" "$PBXPROJ" | head -20
+
+      - name: xcodebuild archive (no signing)
+        run: |
+          xcodebuild archive \
+            -workspace ios/Runner.xcworkspace \
             -scheme Runner \
             -configuration Release \
             -sdk iphoneos \
-            -archivePath build/Runner.xcarchive archive \
+            -archivePath /tmp/Runner.xcarchive \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
-            CODE_SIGNING_IDENTITY="" \
+            CODE_SIGN_IDENTITY="" \
             DEVELOPMENT_TEAM="" \
             PROVISIONING_PROFILE_SPECIFIER="" \
-            -quiet
+            -allowProvisioningUpdates
 
       - name: Package unsigned IPA
         run: |
-          mkdir -p build/Payload
-          cp -R ios/build/Runner.xcarchive/Products/Applications/Runner.app build/Payload/Runner.app
-          cd build
-          zip -r AppMusicVol2-unsigned.ipa Payload >/dev/null
+          APP_PATH=$(find /tmp/Runner.xcarchive/Products -name "*.app" | head -1)
+          echo "App: $APP_PATH"
+          mkdir -p /tmp/Payload
+          cp -r "$APP_PATH" /tmp/Payload/Runner.app
+          cd /tmp && zip -r TaskFlow-unsigned.ipa Payload
+          mv TaskFlow-unsigned.ipa $GITHUB_WORKSPACE/
+          echo "Size: $(du -sh $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa)"
 
-      - name: Upload artifact
+      - name: Upload IPA
         uses: actions/upload-artifact@v4
         with:
-          name: AppMusicVol2-unsigned-ipa
-          path: build/AppMusicVol2-unsigned.ipa
+          name: TaskFlow-iOS-unsigned
+          path: TaskFlow-unsigned.ipa
+          retention-days: 30
