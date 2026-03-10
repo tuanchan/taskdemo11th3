@@ -1,0 +1,49 @@
+name: iOS Unsigned IPA
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build-ios:
+    runs-on: macos-14
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Flutter (stable)
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 'stable'
+          channel: 'stable'
+          cache: true
+
+      - name: Cache pub packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('**/pubspec.lock') }}
+          restore-keys: |
+            pub-${{ runner.os }}-
+
+      - name: Flutter pub get
+        run: flutter pub get
+
+      - name: Build iOS release (no codesign)
+        run: flutter build ios --release --no-codesign
+
+      - name: Package unsigned IPA
+        run: |
+          mkdir -p /tmp/Payload
+          cp -r build/ios/iphoneos/Runner.app /tmp/Payload/Runner.app
+          cd /tmp && zip -r TaskFlow-unsigned.ipa Payload
+          mv /tmp/TaskFlow-unsigned.ipa $GITHUB_WORKSPACE/TaskFlow-unsigned.ipa
+
+      - name: Upload IPA artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: TaskFlow-iOS-unsigned
+          path: TaskFlow-unsigned.ipa
+          retention-days: 30
